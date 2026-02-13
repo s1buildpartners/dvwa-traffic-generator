@@ -1,10 +1,10 @@
 #!/bin/bash
 
-# make sure TARGET_DOMAIN is set
-if [ -z "$TARGET_DOMAIN" ]; then
-    echo "Error: TARGET_DOMAIN environment variable is not set."
+# make sure DVWA_BASE_URL is set
+if [ -z "$DVWA_BASE_URL" ]; then
+    echo "Error: DVWA_BASE_URL environment variable is not set."
     echo
-    echo "Usage: docker run -e TARGET_DOMAIN=http://dvwa:80 dvwa-traffic-generator"
+    echo "Usage: docker run -e DVWA_BASE_URL=http://dvwa:80 dvwa-traffic-generator"
     exit 1
 fi
 
@@ -37,10 +37,9 @@ PATHS=(
     "/404Test"
 )
 
-START_TIME=$(date +%s)
 echo "--- Traffic Generator Started ---"
 echo
-echo "Start Time:  $(date -r "$START_TIME" "+%Y-%m-%d %H:%M:%S")"
+echo "Start Time:  $(date "+%Y-%m-%d %H:%M:%S")"
 echo
 echo "Press [CTRL+C] to stop manually."
 echo "---------------------------------"
@@ -54,7 +53,7 @@ while [ true ]; do
 
     # Loop through paths
     for path in "${PATHS[@]}"; do
-        FULL_URL="${TARGET_DOMAIN}${path}"
+        FULL_URL="${DVWA_BASE_URL}${path}"
         
         # Send request silently, follow redirects, use custom UA
         # Only output status code to keep logs clean

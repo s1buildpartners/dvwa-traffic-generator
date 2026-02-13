@@ -1,7 +1,9 @@
-FROM busybox:latest
+FROM alpine:latest
 
 COPY files /
 
-RUN chmod +x /docker-entrypoint.sh
+RUN set -xe && \
+    apk add --no-cache bash curl && \
+    chmod +x /docker-entrypoint.sh
 
 ENTRYPOINT ["/docker-entrypoint.sh"]
